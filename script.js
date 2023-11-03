@@ -6,12 +6,16 @@ const diceAdvice = document.querySelector('.icon-dice');
 const dividerAdvice = document.querySelector('.divider');
 
 dividerAdvice.addEventListener('click', () => {
+    adviceText.classList.contains('pause') ? dividerAdvice.classList.remove('pause') : dividerAdvice.classList.add('pause'); 
     adviceText.classList.toggle('pause');
 });
 
 async function fetchURL(url) {
     adviceId.innerHTML = '';
     adviceText.innerHTML = '';
+    adviceText.classList.remove('pause');
+    dividerAdvice.classList.remove('pause');
+    diceAdvice.disabled = true;
     const resp = await fetch(url);
     const data = await resp.json();
     adviceId.innerHTML = data.slip.id;
@@ -23,6 +27,7 @@ async function fetchURL(url) {
                 i++
             }
         } else {
+            diceAdvice.disabled = false;
             clearInterval(timing);
         }
     }, 50);
